@@ -1,0 +1,47 @@
+version: 1.0.{build}
+
+image: Ubuntu1804
+
+branches:
+  only:
+    - main
+
+environment:
+  matrix:
+    - nodejs_version: "14"
+
+init:
+  - echo "Installing NVM..."
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  - export NVM_DIR="$HOME/.nvm"
+  - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  - echo "Installing Node.js..."
+  - nvm install $nodejs_version
+  - nvm use $nodejs_version
+
+install:
+  - echo "Installing dependencies..."
+  - npm install
+
+build_script:
+  - echo "Building the project..."
+  - npm run build
+
+test_script:
+  - echo "Running tests..."
+  - npm test
+
+artifacts:
+  - path: dist
+    name: artifact
+
+deploy:
+  provider: GitHubPages
+  token:
+    secure: <E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>
+  local_dir: dist
+  on:
+    branch: main
+
+build:
+  off: true
