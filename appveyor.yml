@@ -1,35 +1,47 @@
-image: Ubuntu2204  # образ для сборки
+version: 1.0.{build}
 
-stack: node 20  # окружение
+image: Ubuntu1804
 
 branches:
   only:
-    - master  # ветка git
     - main
-
-cache:
-  directories:
-    - node_modules  # кеширование
-
-install:
-  - yarn  # команда установки зависимостей
-
-build: off  # отключаем встроенную в appveyor систему сборки
-
-build_script:
-  - yarn build   # команда сборки
-
-test_script:
-  - yarn lint && yarn test  # скрипт тестирования
-
-deploy_script:  # скрипт развёртывания
-  - git config --global credential.helper store
-  - git config --global user.name AppVeyor
-  - git config --global user.email ci@appveyor.com
-  - echo "https://$GH_PAGES_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials"
-  - npx gh-pages -d dist -u "appveyor-bot <ci@appveyor>"
 
 environment:
   matrix:
-    - GH_PAGES_TOKEN:
-        secure: <E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>
+    - nodejs_version: "14"
+
+init:
+  - echo "Installing NVM..."
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  - export NVM_DIR="$HOME/.nvm"
+  - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  - echo "Installing Node.js..."
+  - nvm install $nodejs_version
+  - nvm use $nodejs_version
+
+install:
+  - echo "Installing dependencies..."
+  - npm install
+
+build_script:
+  - echo "Building the project..."
+  - npm run build
+
+test_script:
+  - echo "Running tests..."
+  - npm test
+
+artifacts:
+  - path: dist
+    name: artifact
+
+deploy:
+  provider: GitHubPages
+  token:
+    secure: <E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>
+  local_dir: dist
+  on:
+    branch: main
+
+build:
+  off: true
