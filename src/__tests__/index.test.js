@@ -2,14 +2,12 @@ import { JSDOM } from 'jsdom';
 import fs from 'fs';
 import path from 'path';
 
-// Считываем содержимое HTML-файла
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 
-// Создаем виртуальное окружение DOM с помощью jsdom
+
 const { window } = new JSDOM(html);
 global.document = window.document;
 
-// Теперь вы можете импортировать и тестировать ваш модуль
 import '../style.css'; 
 import goblinImg from '../goblin.png';
 import { moveGoblin } from '../index';
@@ -23,7 +21,6 @@ describe('moveGoblin', () => {
     board.id = 'game-board';
     document.body.appendChild(board);
 
-    // Создаем игровую доску
     for (let i = 0; i < 16; i++) {
       const cell = document.createElement('div');
       board.appendChild(cell);

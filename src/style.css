@@ -1,28 +1,20 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.board {
+#game-container {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(4, 100px);
-  gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 400px; /* Adjust as needed */
+  height: 400px; /* Adjust as needed */
 }
 
-.board div {
-  width: 100px;
-  height: 100px;
+.cell {
   border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 }
 
 img {
-  width: 80px;
-  height: 80px;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
