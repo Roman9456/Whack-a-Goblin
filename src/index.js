@@ -1,30 +1,16 @@
-import './style.css';
-import goblinImg from './goblin.png';
+jest.useFakeTimers(); // Используем мок для setInterval
 
-const boardSize = 4;
-const board = document.getElementById('game-board');
+import { moveGoblin } from '../index'; // Подключаем функцию, которую будем тестировать
 
-//making gameboard
-for (let i = 0; i < boardSize * boardSize; i++) {
-  const cell = document.createElement('div');
-  board.appendChild(cell);
-}
+describe('moveGoblin', () => {
+  test('should call setInterval with correct parameters', () => {
+    // Вызываем функцию moveGoblin
+    moveGoblin();
 
-const cells = Array.from(board.children);
+    // Проверяем, что setInterval была вызвана
+    expect(setInterval).toHaveBeenCalledTimes(1);
 
-let currentIndex = Math.floor(Math.random() * cells.length);
-const goblin = document.createElement('img');
-goblin.src = goblinImg;
-
-cells[currentIndex].appendChild(goblin);
-
-setInterval(() => {
-  let newIndex;
-  do {
-    newIndex = Math.floor(Math.random() * cells.length);
-  } while (newIndex === currentIndex);
-
-  cells[currentIndex].removeChild(goblin);
-  cells[newIndex].appendChild(goblin);
-  currentIndex = newIndex;
-}, 1000);
+    // Проверяем, что setInterval была вызвана с правильными параметрами
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 1000);
+  });
+});

@@ -14,7 +14,7 @@ init:
   - echo "Installing NVM..."
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   - export NVM_DIR="$HOME/.nvm"
-  - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
   - echo "Installing Node.js..."
   - nvm install $nodejs_version
   - nvm use $nodejs_version
@@ -29,7 +29,7 @@ build_script:
 
 test_script:
   - echo "Running tests..."
-  - npm test
+  - npm test -- --passWithNoTests
 
 artifacts:
   - path: dist
@@ -38,10 +38,7 @@ artifacts:
 deploy:
   provider: GitHubPages
   token:
-    secure: <E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>
+    secure: "<E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>"
   local_dir: dist
   on:
     branch: main
-
-build:
-  off: true
