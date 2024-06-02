@@ -5,7 +5,7 @@ const boardSize = 4; // Size of the game board
 let playerPosition = { x: 0, y: 0 }; // Initial position of the player
 
 // Function to generate random position on the board
-const getRandomPosition = () => {
+export const getRandomPosition = () => {
     return {
         x: Math.floor(Math.random() * boardSize),
         y: Math.floor(Math.random() * boardSize)
@@ -53,4 +53,5 @@ const movePlayer = () => {
 createBoard();
 placePlayer();
 setInterval(movePlayer, 1000); // Move player every second
+
 

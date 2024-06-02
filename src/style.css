@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  width: 400px; /* Adjust as needed */
-  height: 400px; /* Adjust as needed */
+  width: 400px; 
+  height: 400px; 
 }
 
 .cell {

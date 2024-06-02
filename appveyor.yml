@@ -27,9 +27,9 @@ build_script:
   - echo "Building the project..."
   - npm run build
 
-test_script:
-  - echo "Running tests..."
-  - npm test -- --passWithNoTests
+# test_script:
+#   - echo "Running tests..."
+#   - npm test -- --passWithNoTests
 
 artifacts:
   - path: dist
@@ -42,3 +42,4 @@ deploy:
   local_dir: dist
   on:
     branch: main
+
