@@ -27,19 +27,18 @@ build_script:
   - echo "Building the project..."
   - npm run build
 
-# test_script:
-#   - echo "Running tests..."
-#   - npm test -- --passWithNoTests
-
 artifacts:
   - path: dist
     name: artifact
 
-deploy:
-  provider: GitHubPages
-  token:
-    secure: "<E1Ng/kJXcW2tJBSLWJr/WJIyMIA9gcTckRa2PfXqMp2VkDCycxkZ5E3nNXI6Q7vX>"
-  local_dir: dist
-  on:
-    branch: main
-
+deploy_script:
+  - echo "Deploying to GitHub Pages..."
+  - git clone https://github.com/Roman9456/Whack-a-Goblin.git
+  - cd Whack-a-Goblin
+  - git checkout gh-pages
+  - cp -R ../dist/* .
+  - git add .
+  - git config user.name "Roman9456"
+  - git config user.email "smolyakov_ra@mail.ru"
+  - git commit -m "Deploying to GitHub Pages"
+  - git push origin gh-pages
