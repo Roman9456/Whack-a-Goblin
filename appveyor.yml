@@ -31,6 +31,7 @@ artifacts:
   - path: dist
     name: artifact
 
+...
 deploy_script:
   - echo "Deploying to GitHub Pages..."
   - git clone https://github.com/Roman9456/Whack-a-Goblin.git
@@ -41,4 +42,5 @@ deploy_script:
   - git config user.name "Roman9456"
   - git config user.email "smolyakov_ra@mail.ru"
   - git commit -m "Deploying to GitHub Pages"
-  - git push origin gh-pages
+  - git push https://${GITHUB_TOKEN}@github.com/Roman9456/Whack-a-Goblin.git gh-pages
+
