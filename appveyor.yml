@@ -48,6 +48,7 @@ deploy_script:
   - echo "Untracked files in working directory:"
   - git status --porcelain
   - cd gh-pages
+  - if git diff --quiet --exit-code; then echo "No changes detected in gh-pages directory. Skipping deployment."; exit 0; fi
   - git add .
   - git commit -m "Deploy to GitHub Pages"
   - git push origin gh-pages
