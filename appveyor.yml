@@ -19,11 +19,11 @@ init:
 
 install:
   - echo "Installing dependencies..."
-  - npm install
+  - yarn install
 
 build_script:
   - echo "Building the project..."
-  - npm run build
+  - yarn run build
 
 artifacts:
   - path: dist
