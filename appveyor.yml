@@ -1,37 +1,43 @@
-image: Ubuntu1804
+image: ubuntu:latest
 
-branches:
-  only:
-    - main
+stages:
+  - build
+  - deploy
 
-environment:
-  matrix:
-    - nodejs_version: "14"
+variables:
+  NODEJS_VERSION: "14"
 
-init:
-  - echo "Installing NVM..."
+before_script:
+  - apt-get update && apt-get install -y curl
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   - export NVM_DIR="$HOME/.nvm"
   - source "$NVM_DIR/nvm.sh"
-  - echo "Installing Node.js..."
-  - nvm install $nodejs_version
-  - nvm use $nodejs_version
+  - nvm install $NODEJS_VERSION
+  - nvm use $NODEJS_VERSION
+  - node -v
+  - npm -v
 
-install:
-  - echo "Installing dependencies..."
-  - npm install
+cache:
+  paths:
+    - node_modules/
 
-build_script:
-  - echo "Building the project..."
-  - npm run build
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist
 
-artifacts:
-  - path: dist
-    name: artifact
-
-deploy_script:
-  - git config --global credential.helper store
-  - git config --global user.name "Roman9456"
-  - git config --global user.email "smolyakov_ra@mail.ru"
-  - echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials"
-  - npx gh-pages -d dist -u "Roman9456 <smolyakov_ra@mail.ru>"
+deploy:
+  stage: deploy
+  script:
+    - git config --global credential.helper store
+    - git config --global user.name "Roman9456"
+    - git config --global user.email "smolyakov_ra@mail.ru"
+    - echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials"
+    - ls dist 
+    - npx gh-pages -d dist -u "Roman9456 <smolyakov_ra@mail.ru>"
+  only:
+    - main
