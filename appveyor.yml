@@ -37,6 +37,8 @@ deploy_script:
   - echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > "$HOME/.git-credentials"
   - echo "Contents of dist directory:"
   - ls -al dist
+  - echo "Checking for changes in the build..."
+  - if git diff --quiet; then echo "No changes detected in the build. Skipping deployment."; exit 0; fi
   - echo "Deploying to GitHub Pages..."
   - git clone --branch gh-pages https://github.com/Roman9456/Whack-a-Goblin.git gh-pages
   - rm -rf gh-pages/*
