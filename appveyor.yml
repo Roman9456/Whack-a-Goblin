@@ -41,6 +41,10 @@ deploy_script:
   - git clone --branch gh-pages https://github.com/Roman9456/Whack-a-Goblin.git gh-pages
   - rm -rf gh-pages/*
   - cp -r dist/* gh-pages/
+  - echo "Contents of gh-pages directory:"
+  - ls -al gh-pages
+  - echo "Untracked files in working directory:"
+  - git status --porcelain
   - cd gh-pages
   - git add -A
   - git commit -m "Deploy to GitHub Pages"
