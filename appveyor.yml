@@ -30,8 +30,13 @@ artifacts:
     name: artifact
 
 deploy_script:
+  - echo "Configuring Git..."
   - git config --global credential.helper store
   - git config --global user.name "Roman9456"
   - git config --global user.email "smolyakov_ra@mail.ru"
   - echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials"
+  - echo "Contents of dist directory:"
+  - ls -al dist
+  - echo "Deploying to GitHub Pages..."
   - npx gh-pages -d dist -u "Roman9456 <smolyakov_ra@mail.ru>"
+  - echo "Deployment complete."
