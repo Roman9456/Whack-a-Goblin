@@ -42,7 +42,7 @@ deploy_script:
   - rm -rf gh-pages/*
   - cp -r dist/* gh-pages/
   - cd gh-pages
-  - git add .
+  - git add -A
   - git commit -m "Deploy to GitHub Pages"
   - git push origin gh-pages
   - echo "Deployment complete."
