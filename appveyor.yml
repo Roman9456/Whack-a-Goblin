@@ -46,7 +46,7 @@ deploy_script:
   - echo "Untracked files in working directory:"
   - git status --porcelain
   - cd gh-pages
-  - git add -A
+  - git add .
   - git commit -m "Deploy to GitHub Pages"
   - git push origin gh-pages
   - echo "Deployment complete."
